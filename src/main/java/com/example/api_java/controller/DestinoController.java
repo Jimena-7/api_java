@@ -28,21 +28,21 @@ public class DestinoController {
         return new ResponseEntity<>(destino, HttpStatus.CREATED);
     }
 
-   @GetMapping("/{id}")
-    public ResponseEntity<Destino>getDestinoById(@PathVariable long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Destino> getDestinoById(@PathVariable long id) {
         Destino destino = destinoServico.getDestinoById(id);
-        return new ResponseEntity<>(destino,HttpStatus.OK);
-   }
+        return new ResponseEntity<>(destino, HttpStatus.OK);
+    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Destino>updateDestino(@PathVariable long id, @RequestBody Destino destino){
-      destinoServico.updateDestino(id, destino);
-    return new ResponseEntity<>(destino,HttpStatus.OK);
+    public ResponseEntity<Destino> updateDestino(@PathVariable long id, @RequestBody Destino destino) {
+        destinoServico.updateDestino(id, destino);
+        return new ResponseEntity<>(destino, HttpStatus.OK);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void>deleteDestino(@PathVariable long id){
+    public ResponseEntity<Void> deleteDestino(@PathVariable long id) {
         destinoServico.deleteDestino(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -61,7 +61,23 @@ public class DestinoController {
         }
     }
 
+    @GetMapping("/detalhes")
+
+    public ResponseEntity<List<Destino>> detalhesPorDescricao(@RequestParam String descricao) {
+        List<Destino> destinos = destinoServico.pesquisarDestinosPorDescricao(descricao);
+        if (!destinos.isEmpty()) {
+            return new ResponseEntity<>(destinos, HttpStatus.OK);
+        } else {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
+
+
+
+
+
 
 
 
