@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 
 public class DestinoServico {
-    private List<Destino> destinos = new ArrayList();
+    private List<Destino> destinos = new ArrayList<>();
 
     public List<Destino> getAllDestinos() {
         return this.destinos;
@@ -40,7 +41,6 @@ public class DestinoServico {
         destinos.removeIf(t -> t.getId() == id);
     }
 
-
     public List<Destino> pesquisarDestinos(String nome, String localizacao) {
         return destinos.stream()
                 .filter(destino ->
@@ -56,5 +56,13 @@ public class DestinoServico {
                 .filter(destino -> destino.getDescricao() != null && destino.getDescricao().equalsIgnoreCase(descricao))
                 .collect(Collectors.toList());
     }
+
+    public Optional<Destino> avaliarDestino(Long id, int nota) {
+        // Verifica se o destino existe
+        Optional<Destino> destinoOptional = Optional.ofNullable(getDestinoById(id));
+        destinoOptional.ifPresent(destino -> destino.adicionarAvaliacao(nota)); // Adiciona a avaliação
+        return destinoOptional; // Retorna o Optional com o destino atualizado (ou vazio, se não existir)
+    }
+
 
 }

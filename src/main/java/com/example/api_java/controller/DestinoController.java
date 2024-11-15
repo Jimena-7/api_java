@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/destinos")
@@ -72,6 +73,19 @@ public class DestinoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping  ("/{id}/avaliacoes")
+    public ResponseEntity<Destino> avaliarDestino(@PathVariable Long id, @RequestParam int nota) {
+        if (nota < 1 || nota > 10) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Destino> destino = destinoServico.avaliarDestino(id, nota);
+        return destino.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() ->
+                        new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }
 
 

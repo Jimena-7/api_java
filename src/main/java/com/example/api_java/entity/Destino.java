@@ -1,5 +1,4 @@
 package com.example.api_java.entity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,16 +9,13 @@ public class Destino {
     private String localizacao;
     private List<Integer> avaliacoes = new ArrayList<>();
     private double mediaAvaliacoes;
-    private int totalAvaliacoes;
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getNome() {
         return nome;
@@ -28,15 +24,12 @@ public class Destino {
         this.nome = nome;
     }
 
-
-
     public String getDescricao() {
         return descricao;
     }
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
 
     public String getLocalizacao() {
         return localizacao;
@@ -45,28 +38,23 @@ public class Destino {
         this.localizacao = localizacao;
     }
 
-
-    public List<Integer> getAvaliacoes() {
-        return avaliacoes;
-    }
+   public List<Integer> getAvaliacoes() {
+      return avaliacoes;
+   }
     public void setAvaliacoes(List<Integer> avaliacoes) {
         this.avaliacoes = avaliacoes;
     }
-
-
     public double getMediaAvaliacoes() {
         return mediaAvaliacoes;
     }
     public void setMediaAvaliacoes(double mediaAvaliacoes) {
         this.mediaAvaliacoes = mediaAvaliacoes;
     }
-
-
-    public int getTotalAvaliacoes() {
-        return totalAvaliacoes;
+    public void adicionarAvaliacao(int nota) {
+        this.avaliacoes.add(nota);
+        this.mediaAvaliacoes = this.avaliacoes.stream()
+                .mapToInt(Integer::intValue)
+                .average()
+                .orElse(0.0);
     }
-    public void setTotalAvaliacoes(int totalAvaliacoes) {
-        this.totalAvaliacoes = totalAvaliacoes;
-    }
-
 }
